@@ -79,7 +79,7 @@ int forlinenumber = 0;			// FOR/NEXT line number to return to
 float *DataStorage;				// DATA statement storage, will assign later
 int DataStorageMax=0;			// max number of data elements
 int DataPosition=0;				// position of read data objects
-char fn[26][LINESIZE]={'\0'};				// function definitions
+char fn[26][LINESIZE]={{'\0'}};	// function definitions
 int error = 0;					// used by eval(), 0 is OK, -1 is expression error
 char tempCharVar[MAXLINESIZE];		// used in evalstring()
 int RUNSTOP=0;					// ctrl-C handler

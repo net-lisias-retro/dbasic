@@ -226,7 +226,7 @@ float eval(char *expr) {
 				/* ABS() return absolute value of expression */
 				if (strncmp(funcname,"abs",3)==0) {
 					float tvalue = eval(funcval);
-					fvalue = abs(tvalue);
+					fvalue = fabs(tvalue);
 					goto funcend;
 				}
 				/* SGN() - return -1, 0, 1 for negative, zero, positive values */
