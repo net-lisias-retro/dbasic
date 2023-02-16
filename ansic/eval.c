@@ -444,27 +444,29 @@ funcend:		// put function result in list for later
 		}
 
 		/* see if expression is enclosed by parenthesis: group them and eval */
-        if (*expr == '(') {
-			expr++;         // skip opening parens
-            int n=0; char temp[80]={'\0'}; 
-			memset(temp,0,sizeof(temp));
-            int parencount=1;
+		if (*expr == '(') {
+			expr++;					// skip opening parens
+			int n = 0;
+			char temp[80] = { '\0' };
+			memset(temp, 0, sizeof(temp));
+			int parencount = 1;
 			while (1) {
-                if (*expr == ')') parencount--;
-				if (parencount==0) break;
-                if (*expr == '(') parencount++;
-                temp[n] = *expr;
-                expr++; n++;
-            }
-            expr++;     // skip ending parens
-			float res = eval(temp);     // evaluate the expression between ()
+				if (*expr == ')')	parencount--;
+				if (parencount == 0) break;
+				if (*expr == '(')	parencount++;
+				temp[n] = *expr;
+				expr++;
+				n++;
+			}
+			expr++;					// skip ending parens
+			float res = eval(temp);	// evaluate the expression between ()
 			val[valpos] = res;
-            valpos++;
-            continue;
-        }
+			valpos++;
+			continue;
+		}
 
 
-		/* undefined character in expression */	
+		/* undefined character in expression */
 		printf("eval: unknown char '%c' in expression.\n",*expr);
 		error = -1;
 		return NAN;
@@ -491,24 +493,25 @@ funcend:		// put function result in list for later
 
 
 	/* test each expression with operators in order from above */
-	for (n=0; n<10; n+=2) {
+	for (n = 0; n < 10; n += 2) {
 		while (1) {
-    	    FLAG=0;
-    	    for (i=1; i<valpos; i++) {
-    	        if (mathchr[i] == oper[n] || mathchr[i] == oper[n+1]) {
-    	            res = domath(val[i],val[i+1],mathchr[i]);
-    	            val[i] = res;
-    	            // shift down rest
-    	            for (int x=i+1; x<valpos; x++) {
-    	                val[x] = val[x+1];
-    	                mathchr[x-1] = mathchr[x];
-    	            }
-    	            FLAG=1;
-    	        }
-    	    }
-    	    if (FLAG) continue;
-    	    break;
-    	}
+			FLAG = 0;
+			for (i = 1; i < valpos; i++) {
+				if (mathchr[i] == oper[n] || mathchr[i] == oper[n + 1]) {
+					res = domath(val[i], val[i + 1], mathchr[i]);
+					val[i] = res;
+					// shift down rest
+					for (int x = i + 1; x < valpos; x++) {
+						val[x] = val[x + 1];
+						mathchr[x - 1] = mathchr[x];
+					}
+					FLAG = 1;
+				}
+			}
+			if (FLAG)
+				continue;
+			break;
+		}
 	}
 	
 	return val[1];		// result
@@ -534,10 +537,10 @@ char *evalstring(char *line) {
 	int n=0;
 
 	memset(tempCharVar,0,MAXLINESIZE);
-evalstrLoop:
+	evalstrLoop:
 
 	if (*line == '\0' || *line == '\n')     // assignment complete
-        return tempCharVar;
+		return tempCharVar;
 
 	/* ignore spaces outside quotes */
 	if (*line == ' ') {
@@ -630,43 +633,47 @@ evalstrLoop:
 	/* RIGHT$(X$,C) */
 	if (strncmp(temp,"right$",6)==0) {
 		// ie. right$(a$,3)
-        line++;     // skip (
-        if (!(*line >= 'a' && *line <= 'z' && *(line+1) == '$')) {
-            printf("Error - expected character variable in right$()\n");
-                error = -1;
-                return "";
-        }
-        char strchr = *line;
-        line += 2;  // skip x$
-        if (*line != ',') {
-            printf("Error - expected seperator char in right$(). Got %c\n",*line);
-            error = -1; 
-            return ""; 
-        }
-        line++;     // skip ,
-        char tmpnum[LINESIZE]={'\0'}; n=0;
-        while (1) {
-            if (*line == ')') break;    // get number between ,)
-            if (*line == '\0') {
-                printf("Error - bad expression in right$()\n");
-                error = -1; 
-                return ""; 
-            }
-            tmpnum[n] = *line;
-            n++; line++;
+		line++;			// skip (
+		if (!(*line >= 'a' && *line <= 'z' && *(line + 1) == '$')) {
+			printf("Error - expected character variable in right$()\n");
+			error = -1;
+			return "";
+		}
+		char strchr = *line;
+		line += 2;		// skip x$
+		if (*line != ',') {
+			printf("Error - expected seperator char in right$(). Got %c\n",
+					*line);
+			error = -1;
+			return "";
+		}
+		line++;			// skip ,
+		char tmpnum[LINESIZE] = { '\0' };
+		n = 0;
+		while (1) {
+			if (*line == ')')
+				break;	// get number between ,)
+			if (*line == '\0') {
+				printf("Error - bad expression in right$()\n");
+				error = -1;
+				return "";
+			}
+			tmpnum[n] = *line;
+			n++;
+			line++;
 		}
 		line++;		// skip )
-        int val = eval(tmpnum);
-        if (val == 0)  
-            return ""; 
+		int val = eval(tmpnum);
+		if (val == 0)
+			return "";
 		// get the last (val) chars of x$
-        n=strlen(CharVars[strchr-'a']); 
-		val=n-val;
-        while (val < n) {
-			strncat(tempCharVar,&CharVars[strchr-'a'][val++],1);
-        }
+		n = strlen(CharVars[strchr - 'a']);
+		val = n - val;
+		while (val < n) {
+			strncat(tempCharVar, &CharVars[strchr - 'a'][val++], 1);
+		}
 		goto evalstrLoop;
-    }
+	}
 
 	/* --------------------------------------------- */
 
@@ -675,56 +682,58 @@ evalstrLoop:
 		// ie. mid$(a$,3,2)		starting at pos 3 for 2 chars
 		int startnum,countnum;
 		char tmpnum[LINESIZE];
-        line++;     // skip (
-        if (!(*line >= 'a' && *line <= 'z' && *(line+1) == '$')) {
-            printf("Error - expected character variable in mid$()\n");
-                error = -1;
-                return "";
-        }
-        char strchr = *line;
-        line += 2;  // skip x$
-        if (*line != ',') {
-            printf("Error - expected seperator char in mid$(). Got %c\n",*line);
-            error = -1;
-            return "";
-        }
-        line++;     // skip ,
-        // get startnum
+		line++;     // skip (
+		if (!(*line >= 'a' && *line <= 'z' && *(line + 1) == '$')) {
+			printf("Error - expected character variable in mid$()\n");
+			error = -1;
+			return "";
+		}
+		char strchr = *line;
+		line += 2;  // skip x$
+		if (*line != ',') {
+			printf("Error - expected seperator char in mid$(). Got %c\n",
+					*line);
+			error = -1;
+			return "";
+		}
+		line++;     // skip ,
+		// get startnum
 		memset(tmpnum,0,LINESIZE); n=0;
-        while (1) {
-            if (*line == ',') break;    // get number between ,)
-            if (*line == '\0') {
-                printf("Error - bad expression in mid$(): startchar\n");
-                error = -1;
-                return "";
-            }
-            tmpnum[n] = *line;
-            n++; line++;
-        }
-        startnum = eval(tmpnum); startnum -= 1;	// really starts at 0
+		while (1) {
+			if (*line == ',') break;		// get number between ,)
+			if (*line == '\0') {
+				printf("Error - bad expression in mid$(): startchar\n");
+				error = -1;
+				return "";
+			}
+			tmpnum[n] = *line;
+			n++;
+			line++;
+		}
+		startnum = eval(tmpnum); startnum -= 1;	// really starts at 0
 		line++;		// skip ,
 		// get countnum
 		memset(tmpnum,0,LINESIZE); n=0;
 		while (1) {
-            if (*line == ')') break;    // get number between ,)
-            if (*line == '\0') {
-                printf("Error - bad expression in mid$(): countchar\n");
-                error = -1;
-                return "";
-            }
-            tmpnum[n] = *line;
-            n++; line++;
-        }
+			if (*line == ')') break;    // get number between ,)
+			if (*line == '\0') {
+				printf("Error - bad expression in mid$(): countchar\n");
+				error = -1;
+				return "";
+			}
+			tmpnum[n] = *line;
+			n++; line++;
+		}
 		line++;		// skip )
 		countnum = eval(tmpnum);
-        if (startnum < 0 || countnum == 0) return "";
-        // get start pos, count number of chars of x$
+		if (startnum < 0 || countnum == 0) return "";
+		// get start pos, count number of chars of x$
 		if (startnum > strlen(CharVars[strchr-'a'])) return "";
 		if (startnum+countnum > strlen(CharVars[strchr-'a'])) return "";
 		for (int x=startnum; x<(startnum+countnum); x++) 
 				strncat(tempCharVar,&CharVars[strchr-'a'][x],1);
-        goto evalstrLoop;	
-    }
+		goto evalstrLoop;
+	}
 
 	/* ------------------------------------------- */
 

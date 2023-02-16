@@ -93,9 +93,9 @@ int fileopen(char *line) {
 	}
 
 	if (fd[fdnumber] == NULL) {
-            printf("Error - could not open file %s for %s\n",filename,o_mode);
-            return -1;
-    }
+		printf("Error - could not open file %s for %s\n", filename, o_mode);
+		return -1;
+	}
 
 	return 0;
 }
@@ -113,29 +113,29 @@ int fileclose(char *line) {
 	sscanf(line,"%s %s %s",ln,cmd,o_filenum);
 
 	/* extract filenumber */
-    if (o_filenum[0] != '#') {
-        printf("Error - badly formatted file number\n");
-        return -1;
-    }
+	if (o_filenum[0] != '#') {
+		printf("Error - badly formatted file number\n");
+		return -1;
+	}
 
-    int n=0;
-    while (o_filenum[n] != '\0') {
-        o_filenum[n] = o_filenum[n+1];
-        n+=1;
+	int n = 0;
+	while (o_filenum[n] != '\0') {
+		o_filenum[n] = o_filenum[n + 1];
+		n += 1;
 		if (n > LNSIZE) {
 			printf("Error - runaway process: fileclose()\n");
 			return -1;
 		}
-    }
-    fdnumber = atoi(o_filenum);
-    if (fdnumber < 1 || fdnumber > 7) {
-        printf("Error - bad file number [%s]\n",o_filenum);
-        return -1;
-    }
+	}
+	fdnumber = atoi(o_filenum);
+	if (fdnumber < 1 || fdnumber > 7) {
+		printf("Error - bad file number [%s]\n", o_filenum);
+		return -1;
+	}
 
-    /* test if the file is already closed */
-    if (fd[fdnumber] == NULL) {
-		printf("Error - file #%d is already closed\n",fdnumber);
+	/* test if the file is already closed */
+	if (fd[fdnumber] == NULL) {
+		printf("Error - file #%d is already closed\n", fdnumber);
 		return -1;
 	}
 
@@ -157,34 +157,34 @@ int filerewind(char *line) {
 	/* format linenum rewind #[n] */
 	char ln[LNSIZE]={'\0'}, cmd[LINESIZE]={'\0'}, o_filenum[LNSIZE]={'\0'};
 
-    sscanf(line,"%s %s %s",ln,cmd,o_filenum);
+	sscanf(line, "%s %s %s", ln, cmd, o_filenum);
 
 	/* extract filenumber */
-    if (o_filenum[0] != '#') {
-        printf("Error - badly formatted file number\n");
-        return -1;
-    }
+	if (o_filenum[0] != '#') {
+		printf("Error - badly formatted file number\n");
+		return -1;
+	}
 
-    int n=0;
-    while (o_filenum[n] != '\0') {
-        o_filenum[n] = o_filenum[n+1];
-        n+=1;
-        if (n > LNSIZE) {
-            printf("Error - runaway process: rewind()\n");
-            return -1;
-        }
-    }
-    fdnumber = atoi(o_filenum);
-    if (fdnumber < 1 || fdnumber > 7) {
-        printf("Error - bad file number [%s]\n",o_filenum);
-        return -1;
-    }
+	int n = 0;
+	while (o_filenum[n] != '\0') {
+		o_filenum[n] = o_filenum[n + 1];
+		n += 1;
+		if (n > LNSIZE) {
+			printf("Error - runaway process: rewind()\n");
+			return -1;
+		}
+	}
+	fdnumber = atoi(o_filenum);
+	if (fdnumber < 1 || fdnumber > 7) {
+		printf("Error - bad file number [%s]\n", o_filenum);
+		return -1;
+	}
 
-    /* test if the file is already closed */
-    if (fd[fdnumber] == NULL) {
-        printf("Error - file #%d is closed\n",fdnumber);
-        return -1;
-    }
+	/* test if the file is already closed */
+	if (fd[fdnumber] == NULL) {
+		printf("Error - file #%d is closed\n", fdnumber);
+		return -1;
+	}
 
 	/* rewind the file */
 	rewind(fd[fdnumber]);

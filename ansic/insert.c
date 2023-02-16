@@ -147,17 +147,18 @@ int insert(char line[LINESIZE]) {
 		
 		// insert the line at this address
 		linesize = strlen(line);
-        n = 0;
-        while (1) {     // shift everything up by line length
-            buffer[pos+linesize-n] = buffer[pos-n];
-            n++;
-            if (pos-n == startaddress-1) break;
-        }
-        pos += linesize;        // update end of buffer
-        
+		n = 0;
+		while (1) {     // shift everything up by line length
+			buffer[pos + linesize - n] = buffer[pos - n];
+			n++;
+			if (pos - n == startaddress - 1)
+				break;
+		}
+		pos += linesize;        // update end of buffer
+
 		// insert new line at startaddress
-        for (n=0; n<linesize; n++)
-            buffer[startaddress+n] = line[n];
+		for (n = 0; n < linesize; n++)
+			buffer[startaddress + n] = line[n];
 
 		return 0;
 	}

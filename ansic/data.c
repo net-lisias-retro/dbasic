@@ -138,9 +138,9 @@ int run_read(char *line) {		// load variables with data values
 	float eval(char *);
 
 	if (isdigit(*line)) while (isdigit(*line)) line++;  // skip line #
-    if (isblank(*line)) while (isblank(*line)) line++;  // and spaces
-    if (isalpha(*line)) while (isalpha(*line)) line++;  // and READ statement
-    if (isblank(*line)) while (isblank(*line)) line++;  // final space
+	if (isblank(*line)) while (isblank(*line)) line++;  // and spaces
+	if (isalpha(*line)) while (isalpha(*line)) line++;  // and READ statement
+	if (isblank(*line)) while (isblank(*line)) line++;  // final space
 
 	/* format: 1000 read a,b,c,d,e\n\0  */
 	while (1) {

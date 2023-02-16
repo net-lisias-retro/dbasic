@@ -159,17 +159,19 @@ gsrloop:
 int getNextLineNumber() {
 	/* get & save the line number following the current line */
 	/* This only works when called from the parse loop */
-    int i=lineptr, x=0;             // skip current line
-    while (buffer[i++] != '\n');
-    char tmpline[LINESIZE]={'\0'};      // next line
-    while (1) {
-    	tmpline[x] = buffer[i+x];   // fill temp line
-        if (tmpline[x]=='\n') break;
-            x++;
-    }
-    char linen[LNSIZE];
-    sscanf(tmpline,"%s",linen);     // get line number of next line
-    return atoi(linen);
+	int i = lineptr, x = 0;					// skip current line
+	while (buffer[i++] != '\n')
+		;
+	char tmpline[LINESIZE] = { '\0' };		// next line
+	while (1) {
+		tmpline[x] = buffer[i + x];			// fill temp line
+		if (tmpline[x] == '\n')
+			break;
+		x++;
+	}
+	char linen[LNSIZE];
+	sscanf(tmpline, "%s", linen);			// get line number of next line
+	return atoi(linen);
 }
 
 
@@ -266,7 +268,7 @@ int parse(char *line) {
 			return run_ongoto(line);
 		if (strcmp(word3,"gosub")==0) {	// on gosub
 			/* get & save the line number following this line */
-        	returnlinenumber[returnPos] = getNextLineNumber();
+			returnlinenumber[returnPos] = getNextLineNumber();
 			returnPos++;
 			if (returnPos > GOSUBSTACKSIZE) {
 				printf("Error - return stack full\n");
@@ -399,10 +401,10 @@ int main(int argc, char **argv) {
 
 	/* set up memory for the basic statements */
 	buffer = malloc(BUFSIZE*sizeof(char));
-    if (buffer == NULL) {
-        printf("Error - buffer memory error\n");
-        exit(1);
-    }
+	if (buffer == NULL) {
+		printf("Error - buffer memory error\n");
+		exit(1);
+	}
 	memset(buffer,0,BUFSIZE);
 	LOADFLAG = 0;
 	// see if filename given: if so, load it
@@ -524,8 +526,8 @@ runit:
 
 	// set up the base vars - these hold actual values. Then assign pointers to them
 	for (int n=0; n<26; n++) {
-        NumBase[n] = (float *) malloc((NumSize[n]+1) * sizeof(float *));	// var(0)..var(10) 
-    	if (NumBase[n] == NULL) {
+		NumBase[n] = (float *) malloc((NumSize[n]+1) * sizeof(float *));	// var(0)..var(10)
+		if (NumBase[n] == NULL) {
 			printf("Error - memory space failed for variables: base\n");
 			exit(1);
 		}
@@ -561,8 +563,8 @@ runit:
 	}
 
 	/* set up the return stack (gosub's) */
-    for (int n=0; n<GOSUBSTACKSIZE; n++) returnlinenumber[n] = 0;
-    returnPos = 0;
+	for (int n=0; n<GOSUBSTACKSIZE; n++) returnlinenumber[n] = 0;
+	returnPos = 0;
 
 
 parseLoop:
@@ -587,12 +589,12 @@ parseLoop:
 		free(buffer); free(DataStorage);
 		for (int n=0; n<26;n++) free(NumBase[n]);
 		/* close all open file descriptors */
-        for (int n=1; n<8; n++) {
-            if (fd[n] != NULL) {
-                fclose(fd[n]);
-                fd[n] = NULL;
-            }
-        }
+		for (int n = 1; n < 8; n++) {
+			if (fd[n] != NULL) {
+				fclose(fd[n]);
+				fd[n] = NULL;
+			}
+		}
 		exit(0);
 	}
 
@@ -602,12 +604,12 @@ parseLoop:
 	/* test for eval() errors */
 	if (error == -1) {
 		/* close all open file descriptors */
-        for (int n=1; n<8; n++) {
-            if (fd[n] != NULL) {
-                fclose(fd[n]);
-                fd[n] = NULL;
-            }
-        }
+		for (int n = 1; n < 8; n++) {
+			if (fd[n] != NULL) {
+				fclose(fd[n]);
+				fd[n] = NULL;
+			}
+		}
 		printf("Error - expression error in %d [%s]\n",currentlinenumber,line);
 		LOADFLAG=0;
 		printf("Ready.\n");
@@ -615,14 +617,14 @@ parseLoop:
 	}
 
 	/* test return code */
-	if (res == -998) {				// STOP statement (duplicate of END - future proof)
+	if (res == -998) {		// STOP statement (duplicate of END - future proof)
 		/* close all open file descriptors */
-        for (int n=1; n<8; n++) {
-            if (fd[n] != NULL) {
-                fclose(fd[n]);
-                fd[n] = NULL;
-            }
-        }
+		for (int n = 1; n < 8; n++) {
+			if (fd[n] != NULL) {
+				fclose(fd[n]);
+				fd[n] = NULL;
+			}
+		}
 		printf("STOPPED in line %d\n",currentlinenumber);
 		if (LOADFLAG==0) {
 			printf("Ready.\n");
@@ -651,21 +653,21 @@ parseLoop:
 		}
 		free(buffer); free(DataStorage);
 		if (GARBAGE) {
-            for (int n=0; n<26; n++) {
-                free(NumBase[n]);
-            }
-        }	
+			for (int n = 0; n < 26; n++) {
+				free(NumBase[n]);
+			}
+		}
 		exit(0);
 	}
 	
 	if (res == -1) {				// parse returned an error
 		/* close all open file descriptors */
-        for (int n=1; n<8; n++) {
-            if (fd[n] != NULL) {
-                fclose(fd[n]);
-                fd[n] = NULL;
-            }
-        }
+		for (int n = 1; n < 8; n++) {
+			if (fd[n] != NULL) {
+				fclose(fd[n]);
+				fd[n] = NULL;
+			}
+		}
 		printf("Error in line %d\n",currentlinenumber);
 		if (LOADFLAG==0) {
 			printf("Ready.\n");
@@ -673,10 +675,10 @@ parseLoop:
 		}
 		free(buffer); free(DataStorage);
 		if (GARBAGE) {
-            for (int n=0; n<26; n++) {
-                free(NumBase[n]);
-            }
-        }
+			for (int n = 0; n < 26; n++) {
+				free(NumBase[n]);
+			}
+		}
 		exit(0);
 	}
 	
@@ -690,10 +692,10 @@ parseLoop:
 			free(buffer);
 			free(DataStorage);
 			if (GARBAGE) {
-            	for (int n=0; n<26; n++) {
-            	    free(NumBase[n]);
-            	}
-        	}
+				for (int n = 0; n < 26; n++) {
+					free(NumBase[n]);
+				}
+			}
 			exit(0);
 		}
 		goto parseLoop;				// continue at new address
@@ -713,12 +715,12 @@ parseLoop:
 	
 	// user hit ctrl-c
 	/* close all open file descriptors */
-    for (int n=1; n<8; n++) {
-       if (fd[n] != NULL) {
-            fclose(fd[n]);
-            fd[n] = NULL;
-        }
-    }
+	for (int n = 1; n < 8; n++) {
+		if (fd[n] != NULL) {
+			fclose(fd[n]);
+			fd[n] = NULL;
+		}
+	}
 	
 	printf("\nBreak in %d\nReady.\n",currentlinenumber);
 	goto runloop;
@@ -728,19 +730,19 @@ parseLoop:
 
 	/* done */
 	/* close all open file descriptors */
-    for (int n=1; n<8; n++) {
-        if (fd[n] != NULL) {
-           fclose(fd[n]);
-           fd[n] = NULL;
-        }
-    }
+	for (int n = 1; n < 8; n++) {
+		if (fd[n] != NULL) {
+			fclose(fd[n]);
+			fd[n] = NULL;
+		}
+	}
 	free(buffer);
 	free(DataStorage);
 	if (GARBAGE) {
-        for (int n=0; n<26; n++) {
-            free(NumBase[n]);
-        }
-    }
+		for (int n = 0; n < 26; n++) {
+			free(NumBase[n]);
+		}
+	}
 	exit(1);
 }
 

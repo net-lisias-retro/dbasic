@@ -32,28 +32,28 @@ int run_input(char *line) {
 	while (isdigit(*line)) line++;		// skip line number
 	if (isblank(*line)) while (isblank(*line)) line++;	// skip spaces
 	while (isalpha(*line)) line++;		// skip keyword
-    if (isblank(*line)) while (isblank(*line)) line++;
-    
+	if (isblank(*line)) while (isblank(*line)) line++;
+
 	// test for file #
-	if (*line == '#') {     // print to a file 
-        ISFILE=1;
-        line++;             // skip past #
-        if (!(isdigit(*line))) {
-            printf("Error - bad syntax in INPUT\n");
-            return -1;
-        }
+	if (*line == '#') {						// print to a file
+		ISFILE = 1;
+		line++;								// skip past #
+		if (!(isdigit(*line))) {
+			printf("Error - bad syntax in INPUT\n");
+			return -1;
+		}
 		fdnumber = atoi(line);
-        if (fdnumber < 1 || fdnumber > 7) {     // 1-7 allowed
-            printf("Error - bad file number %d in INPUT\n",fdnumber);
-            return -1;
-        }
-        /* make sure it's already opened */
-        if (fd[fdnumber] == NULL) {
-            printf("Error - file number %d is not opened\n",fdnumber);
-            return -1;
-        }
-        line++;         // skip file number
-    }
+		if (fdnumber < 1 || fdnumber > 7) {	// 1-7 allowed
+			printf("Error - bad file number %d in INPUT\n", fdnumber);
+			return -1;
+		}
+		/* make sure it's already opened */
+		if (fd[fdnumber] == NULL) {
+			printf("Error - file number %d is not opened\n", fdnumber);
+			return -1;
+		}
+		line++;								// skip file number
+	}
 
 	/* format: 	input a					input #n a
 	 * 			input a,b,c				input #n a,b,c
@@ -130,20 +130,20 @@ int run_input(char *line) {
 				line++;
 			}
 			// error bounds checking
-            if (subscript < 0 || subscript > NumSize[charvar-'a']) {
-                printf("Error - bounds error in subscript: %c(%d)\n",charvar,subscript);
-                return -1;
-            }
+			if (subscript < 0 || subscript > NumSize[charvar - 'a']) {
+				printf("Error - bounds error in subscript: %c(%d)\n", charvar, subscript);
+				return -1;
+			}
 
 			if (!ISFILE) printf("?");
 			if (!ISFILE) fgets(getline,LINESIZE,stdin);		// 20 chars max for digits
 			if (ISFILE) {
 				fgets(getline,LINESIZE,fd[fdnumber]);
 				if (feof(fd[fdnumber])) {
-                    printf("Warning - reached end of file\n");
-                    return 0;
-                }
-            }
+					printf("Warning - reached end of file\n");
+					return 0;
+				}
+			}
 			NumVar[charvar-'a'][subscript] = eval(getline);		// save value
 			line++;
 			continue;
