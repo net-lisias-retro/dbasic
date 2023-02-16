@@ -1,10 +1,11 @@
 /* print.c
  *
- * part of dbasic
- * (C) k theis <theis.kurt@gmail.com>
+ * part of dbasic/L
+ *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  *
  * BASIC PRINT statement
- *
  */
 
 #include <stdio.h>

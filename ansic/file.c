@@ -1,9 +1,9 @@
 /* file.c - file operations for dbasic
  *
- * part of dbasic
+ * part of dbasic/L
  *
- * (C) 2022 K Theis <theis.kurt@gmail.com>
- *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  */
 
 #include <stdio.h>

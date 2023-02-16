@@ -1,10 +1,11 @@
 /* let.c 
  *
- * part of dbasic 
- * (C) k theis <theis.kurt@gmail.com> 2022
+ * part of dbasic/L
+ *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  *
  * parse the let command, assign variables
- *
  */
 
 #include <stdio.h>

@@ -1,6 +1,10 @@
 /* 
  * math routines and eval for strings 
- * (c) k theis 2022 <theis.kurt@gmail.com>
+ *
+ * part of dbasic/L
+ *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  *
  * This is the math formula, expression and number
  * evaluation routine. Given a single number, variable, 
@@ -14,12 +18,7 @@
  * Formulas are evaluated as they appear in the expression.
  * All evaluations are float. Where expressions need to
  * be integer, they are converted before operation.
- *
- * this is part of dbasic
- *
  */
-
-
 
 #include <stdio.h>
 #include <stdlib.h>

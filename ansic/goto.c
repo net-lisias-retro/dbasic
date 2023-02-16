@@ -1,11 +1,9 @@
 /* goto.c
  *
- * part of dbasic
+ * part of dbasic/L
  *
- * (C) k theis <theis.kurt@gmail.com> 2022
- *
- * GOTO and ON GOTO, GOSUB and ON GOSUB routines
- *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  */
 
 #include <stdio.h>

@@ -1,15 +1,16 @@
-/* ifthen.c - if (expression) =, !=, <, > (expression) then [line number] */
-/* test 2 values - if they match the text chars, return a line number
+/* ifthen.c
+ *
+ * part of dbasic/L
+ *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
+ *
+ * if (expression) =, !=, <, > (expression) then [line number]
+ * test 2 values - if they match the text chars, return a line number
  * else return 0 (failed test)
  * 
  * This tests both numeric and string expressions
- * 
- * part of dbasic
- *
- * (C) k theis <theis.kurt@gmail.com> 2022
- *
  */
-
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,54 +1,9 @@
-/* basic.c - Kurt's version of Dartmuth BASIC
-   see the file Dbasic.txt for usage instructions
-   (C) 2022 K Theis <theis.kurt@gmail.com>
+/* basic.c - dbasic/L - a version of Dartmuth BASIC
 
- This is free software under the MIT license.
+	© 2023 LisiasT <me@lisias.net>
+	© 2022 K Theis <theis.kurt@gmail.com>
 
- Statements in this version of BASIC:
- REM, PRINT, LET, GOTO, GOSUB, RETURN, END, 
- IF/THEN, FOR/NEXT/STEP, INPUT, READ, DATA,
- RESTORE, ON/GOTO, ON/GOSUB, CLEAR, STOP, DEF,
- OPEN, CLOSE, REWIND
-
- Formulas: a+b, a-b, a*b, a/b, a**b, -a
- 
- Equality Tests: >, >=, <, <=, =, <>, !=
- 
- Logical:  a&b, a|b, a^b (and/or/xor)
- 
- Functions: SIN(), COS(), TAN(), EXP(), LN(),
- LOG(), SQR(), LEFT$(), RIGHT$(), MID$(), ASC(),
- CHR$(), FNx, INT(), ABS(), SGN(), ATN(), LEN(),
- RND(), RAD(), DEC(), SPC(), VAL(), EOF(), STR$(),
- TIME()
-
- Floating point numeric variables are a...z
- a(0)..a(10) ... z(0)..z(10) are pre-defined
- String variables are a$...z$
-
- All keywords, variables are in lower case.
- Case is preserved when between double quotes ""
-
- Please see the file Dbasic.txt in this repository
- for details on use, example programs, etc.
-
-
- TODO: 
- keywords:
- string functions: 
- math functions: matrix math,
- misc functions: NOT(), TAB(), AND(), OR()
-
-
-	To build this:
-	make
-	To install:
-	sudo make install
-	binary 'dbasic' will be installed in /usr/local/bin
-
-	To start basic, type 'dbasic'.
-	Type 'exit' or 'quit' to exit basic.
-
+	This is free software under the MIT license.
 */
 
 #include <stdio.h>
@@ -68,7 +23,7 @@ char CharVars[26][LINESIZE];	// a$ thru z$, max 80 chars long each
 int pos = 0;					// current end position of the buffer
 int currentlinenumber = 0;		// line number of the current line being tested
 int lineptr = 0;				// current buffer position during run loop
-// position in buffer when RETURN command issued
+								// position in buffer when RETURN command issued
 int returnlinenumber[GOSUBSTACKSIZE];
 int returnPos = 0;				
 float index_start = 0;			// FOR/NEXT start index
@@ -122,8 +77,9 @@ int version(void);
 
 /**** VERSION() *****/
 int version(void) {		// show version
-	printf("\ndbasic version %s\n",VERSION);
-	printf("(C) 2022 Kurt Theis <theis.kurt@gmail.com>\n");
+	printf("\ndbasic/L version %s\n",VERSION);
+	printf("© 2023 LisiasT <support@lisias.net>\n");
+	printf("© 2022 Kurt Theis <theis.kurt@gmail.com>\n");
 	return 0;
 }
 

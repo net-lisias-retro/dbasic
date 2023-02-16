@@ -1,9 +1,9 @@
 /* dim.c - dbasic numeric arrays 
  *
- * part of dbasic
+ * part of dbasic/L
  *
- * (C) k theis <theis.kurt@gmail.com> 2022
- *
+ *	© 2023 LisiasT <me@lisias.net>
+ *	© 2022 k theis <theis.kurt@gmail.com>
  */
 
 #include <stdio.h>
